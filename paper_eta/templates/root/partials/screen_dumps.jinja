@@ -1,0 +1,15 @@
+{% if image %}
+<div class="col-md-3 col-12 my-sm-0 my-1">
+    <div class="card" style="width: 18rem; margin: auto;">
+        <img class="m-2" src="data:image/bmp;base64, {{ image }}">
+    </div>
+</div>
+{% else %}
+<p class="text-danger">
+    {{ _('no_data') }}
+</p>
+{% endif %}
+
+<span class="text-end text-muted" style="font-size: 0.9rem;">
+    {{ _("last-update") ~ _(":") ~ time() }}
+</span>

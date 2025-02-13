@@ -1,0 +1,57 @@
+
+#content {
+    min-height: 100vh;
+}
+
+.form-group {
+    margin: 10px 0px;
+}
+
+.overlay {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    filter: alpha(opacity=50);
+    z-index: 100;
+}
+
+hr {
+    /* override */
+    margin: .25rem;
+}
+
+/* form */
+
+.form-check-input:checked {
+    /* override */
+    background-color: #E49B0F;
+    border-color: #E49B0F;
+}
+
+.form-check-input:focus {
+    /* override */
+    /* remove blue shadow when focusing */
+    box-shadow: none;
+}
+
+.table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(var(--theme-color-rgb), 0.05);
+}
+
+/* ----- navbar ----- */
+
+.dropdown-item.active,
+.dropdown-item:active {
+    /* override */
+    color: black;
+    background-color: var(--theme-4-color);
+}
+
+
+.navbar-nav .nav-link.active {
+    /* override */
+    color: var(--theme-2-color);
+    font-weight: bolder;
+}

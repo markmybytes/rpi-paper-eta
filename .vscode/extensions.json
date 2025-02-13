@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.isort",
+        "njpwerner.autodocstring",
+        "ms-python.autopep8",
+        "samuelcolvin.jinjahtml",
+        "mrorz.language-gettext"
+    ]
+}

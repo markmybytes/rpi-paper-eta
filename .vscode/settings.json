@@ -1,0 +1,21 @@
+{
+    "files.eol": "\n",
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "editor.rulers": [
+      {
+        "column": 80,
+        "color": "#ffee0050"
+      },
+      {
+        "column": 120,
+        "color": "#ff000050"
+      },
+    ],
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.autopep8",
+      "editor.formatOnSave": true
+    },
+    "python.analysis.importFormat": "relative",
+    "autoDocstring.docstringFormat": "google",
+    "pylint.importStrategy": "fromEnvironment",
+  }

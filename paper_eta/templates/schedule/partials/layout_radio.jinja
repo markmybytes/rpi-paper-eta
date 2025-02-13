@@ -1,0 +1,38 @@
+{% for name, layout in layouts.items() %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title" style="line-height: unset;">
+            <div class="form-check">
+                <label class="form-check-label">
+                    {{ name }}
+                    <input class="form-check-input" type="radio" name="layout" value="{{ name }}"
+                        x-model="layout.{{ eta_format }}" required>
+                </label>
+
+                <div class="float-end">
+                    <button type="button" class="btn btn-sm btn-outline-success preview-btn" data-bs-toggle="modal"
+                        data-bs-target="#preview-md"
+                        hx-get="{{ url_for('schedule.preview', eta_format=eta_format, layout=name) }}"
+                        hx-include="select[name=bookmark_group_id]" hx-target="#preview-md #outter-preview"
+                        hx-indicator=".hx-indicator"
+                        hx-on::before-request="document.getElementById('outter-preview').innerHTML = ''">
+                        {{ _('layout_preview') }}
+                    </button>
+                </div>
+            </div>
+        </h5>
+
+        <hr class="my-3">
+
+        <p class="card-text mb-2">
+            {{ layout["description"][get_locale()] }}
+        </p>
+
+        <ul class="card-text m-0">
+            {% for graphic in layout["graphics"][get_locale()] %}
+            <li class="text-muted" style="font-size: 0.8rem;">{{ graphic }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endfor %}

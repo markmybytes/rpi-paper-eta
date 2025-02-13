@@ -1,0 +1,17 @@
+{% with messages = get_flashed_messages(category_filter=["warning"]) %}
+{% if messages | count == 1 %}
+<div class="alert alert-warning">
+    {{ messages[0] }}
+</div>
+{% elif messages | count > 1 %}
+<div class="alert alert-warning">
+    <ul style="margin: 0px;">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% else%}
+{# pass #}
+{% endif %}
+{% endwith %} 

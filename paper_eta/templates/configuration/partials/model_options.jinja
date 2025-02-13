@@ -1,0 +1,9 @@
+{% for model in models %}
+{% if model == current %}
+<option value="{{ model }}" selected>{{ model }}</option>
+{% else %}
+<option value="{{ model }}">{{ model }}</option>
+{% endif %}
+{% else %}
+<option value="">{{ _("please_select") }}</option>
+{% endfor %}

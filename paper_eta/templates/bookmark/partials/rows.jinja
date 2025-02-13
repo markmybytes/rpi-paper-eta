@@ -1,0 +1,35 @@
+{% for bm in bookmarks %}
+<tr class="{{ '' if bm.enabled else 'disabled'}}">
+    <td>{{ _(bm.transport) }}</td>
+    <td>{{ bm.no }}</td>
+    <td>{{ _(bm.direction) }}</td>
+    <td>{{ bm.service_type }}</td>
+    <td>{{ bm.stop_name }}</td>
+    <td>
+        <div class="d-inline-flex" style="gap: 2px;">
+            <button type="button" class="dt-action btn btn-danger btn-sm"
+                hx-delete="{{ url_for('bookmark.delete', id_=bm.id) }}" title="{{ _('delete') }}">
+                <i class="bi bi-trash"></i>
+            </button>
+            <a type="button" class="dt-action btn btn-success btn-sm" href="{{ url_for('bookmark.edit', id_=bm.id) }}"
+                title="{{ _('edit') }}">
+                <i class="bi bi-pencil-square"></i>
+            </a>
+            <button type="button" class="dt-action btn btn-sm btn-light" hx-put="{{
+                url_for('bookmark.toggle_status', id_=bm.id ) }}" title="{{ _('enable/disable') }}">
+                {% if bm.enabled %}
+                <i class="bi bi-eye-slash-fill"></i>
+                {% else %}
+                <i class="bi bi-eye-fill"></i>
+                {% endif %}
+            </button>
+        </div>
+    </td>
+    <input type="hidden" name="ids[]" value="{{ bm.id }}">
+</tr>
+{% endfor %}
+{% if bookmarks | length == 0 %}
+<tr>
+    <td colspan="100%" class="d-table-cell text-center">{{ _('no_record') }}</td>
+</tr>
+{% endif %}

@@ -1,0 +1,116 @@
+{% extends "layout.jinja" %}
+{% block title %}
+{{ _('nav_bookmark') ~ " (" ~ group.name ~ ")" if group else _('nav_bookmark') }}
+{% endblock title %}
+
+
+{% block nav %}
+{% include "includes/navbar.jinja" %}
+{% endblock nav %}
+
+
+{% block link %}
+<link href="https://cdn.jsdelivr.net/gh/superdumbtm/rpc-table@0.1.2/dist/rpc-table.min.css" rel="stylesheet">
+{% endblock link %}
+
+
+{% block content %}
+<div class="container-xxl">
+    <div class="row m-2">
+        {% include "includes/flash.jinja" %}
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <div class="btn-group flex-wrap">
+                <a href="{{ url_for('bookmark.create', bgid=group.id) }}"
+                    class="btn btn-secondary btn-sm btn-success mx-1">
+                    {{ _('create') }}
+                </a>
+
+                <div x-data>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="file" name="bookmarks" class="d-none" @upload.window="$el.click()"
+                            @change="$event.target.form.submit()">
+                        <button type="button" class="btn btn-secondary btn-sm btn-info mx-1"
+                            @click="$dispatch('upload')">
+                            {{ _('import') }}
+                        </button>
+                    </form>
+                </div>
+
+                <a href="{{ url_for('bookmark.index', bgid=group.id, action='export') }}"
+                    class="btn btn-secondary btn-sm mx-1">
+                    {{ _('export') }}
+                </a>
+            </div>
+        </div>
+
+        <div class="col-4 text-end">
+            {% if group %}
+            <span class="badge bg-primary text-truncate align-middle" style="max-width: 100%; font-size: 0.9rem;">
+                {{ group.name }}
+            </span>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="row p-2">
+        <div class="col">
+            <form>
+                <div class="table-responsive">
+                    <table class="table table-striped" hx-get="" hx-trigger="load delay:1ms" hx-target="tbody"
+                        hx-on::before-request="showLoading(0)"
+                        hx-on::after-settle="rpc.process(); makeSortable(); hideLoading(200)" style="min-width: 300px;">
+                        <thead>
+                            <tr>
+                                <th>{{ _('transport') }}</th>
+                                <th>{{ _('route') }}</th>
+                                <th class="collapse-xs">{{ _('direction') }}</th>
+                                <th class="collapse-md">{{ _('service_type') }}</th>
+                                <th>{{ _('stop') }}</th>
+                                <th class="collapse-sm" style="min-width: 90px;">{{ _('action') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody hx-put="{{ url_for('bookmark.reorder', bgid=request.args.get('bgid')) }}"
+                            hx-trigger="moved" hx-include="closest form">
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/superdumbtm/rpc-table@0.1.2/dist/rpc-table.min.js"></script>
+
+<script>
+    const rpc = new RpcTable('table');
+    var sortable = null;
+
+    function makeSortable() {
+        if (window.screen.width >= 768) {
+            if (document.querySelectorAll("tbody input").length <= 1)
+                return
+
+            if (sortable)
+                sortable.destroy()
+
+            sortable = Sortable.create(document.getElementsByTagName("tbody")[0],
+                {
+                    draggable: 'tr:not(.child)',
+                    onEnd: (event) => {
+                        if (event.newIndex == event.oldIndex)
+                            return
+                        document.querySelector("tbody").dispatchEvent(new Event("moved"))
+                    }
+                });
+        }
+    }
+</script>
+{% endblock script %}

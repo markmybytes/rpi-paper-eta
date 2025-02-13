@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg bg-theme">
+    <div class="container-fluid">
+        <div class="navbar-brand">
+            <span class="text-light user-select-none" style="font-family: Courier; font-weight: 600;">
+                <i class="bi bi-file-earmark"></i> Paper ETA
+            </span>
+
+            {% if is_dry_run() %}
+                <span class="badge text-bg-warning user-select-none" style="font-size: 0.8rem;">
+                {{ _('dry_run') }}
+                </span>
+            {% endif %}
+        
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('root.index') }}">
+                        {{ _('nav_home') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('configuration.index') }}">
+                        {{ _('nav_configuration') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('control.index') }}">
+                        {{ _('nav_control') }}
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/configuration" data-bs-toggle="dropdown">
+                        {{ _('nav_route') }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ url_for('bookmark.index') }}">
+                                {{ _('nav_bookmark') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ url_for('bookmark_group.index') }}">
+                                {{ _('nav_bookmark_group') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('schedule.index') }}">
+                        {{ _('nav_schedule') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('log.index') }}">
+                        {{ _('nav_log') }}
+                    </a>
+                </li>
+            </ul>
+
+            <div class="dropdown">
+                <button class="btn btn-muted dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-globe-asia-australia"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end dropdown-menu-start">
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('root.change_language', lang='en') }}">
+                            English
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('root.change_language', lang='zh_Hant_HK') }}">
+                            繁體中文
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>

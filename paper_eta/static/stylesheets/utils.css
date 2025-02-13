@@ -1,0 +1,110 @@
+:root {
+    /* https://www.canva.com/colors/color-palettes/green-lemons/ */
+    --theme-color: #478c5c;
+    --theme-color-rgb: 81, 160, 112;
+    --theme-2-color: #c8d7a5;
+    --theme-2-color-rgb: 200, 215, 165;
+    --theme-3-color: #21492d;
+    --theme-3-color-rgb: 33, 73, 45;
+    --theme-4-color: #bacc81;
+    --theme-4-color-rgb: 186, 204, 129;
+}
+
+
+.bg-theme {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--theme-color-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-theme-2 {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--theme-2-color-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.text-theme {
+    --bs-text-opacity: 1;
+    color: rgba(var(--theme-color-rgb), var(--bs-text-opacity)) !important;
+}
+
+.text-theme-2 {
+    --bs-text-opacity: 1;
+    color: rgba(var(--theme-2-color-rgb), var(--bs-text-opacity)) !important;
+}
+
+/* ----- callout ----- */
+
+.callout {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #e9ecef;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+}
+
+.callout-sm {
+    padding: 0.35rem;
+    margin-top: 0.35rem;
+    margin-bottom: 0.35rem;
+    font-size: small;
+    border: 1px solid #e9ecef;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+}
+
+.callout-danger {
+    border: 1px solid var(--bs-danger);
+    border-left-width: .25rem;
+}
+
+.callout-success {
+    border: 1px solid var(--bs-success);
+    border-left-width: .25rem;
+}
+
+/* ----- spinner ----- */
+.loader-circle {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #EEE;
+    border-bottom-color: #FF3D00;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-ellipsis {
+    width: 60px;
+    aspect-ratio: 4;
+    --_g: no-repeat radial-gradient(circle closest-side, #000 90%, #0000);
+    background:
+        var(--_g) 0% 50%,
+        var(--_g) 50% 50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100%/3) 100%;
+    animation: l7 1s infinite linear;
+}
+
+@keyframes l7 {
+    33% {
+        background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%
+    }
+
+    50% {
+        background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%
+    }
+
+    66% {
+        background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
+    }
+}

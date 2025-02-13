@@ -1,0 +1,105 @@
+{% from "macros/render_field.jinja" import render_field %}
+
+
+{% extends "layout.jinja" %}
+{% block title %}{{ _('nav_schedule') }}{% endblock title %}
+
+
+{% block link %}
+<link href="https://cdn.jsdelivr.net/gh/superdumbtm/rpc-table@0.1.2/dist/rpc-table.min.css" rel="stylesheet">
+{% endblock link %}
+
+
+{% block style %}
+<style>
+    .table tr.disabled td {
+        color: var(--bs-gray-500);
+    }
+</style>
+{% endblock style %}
+
+
+{% block nav %}
+{% include "includes/navbar.jinja" %}
+{% endblock nav %}
+
+
+{% block content %}
+<div class="container-xxl">
+
+    <div class="row m-2">
+        {% include "includes/flash.jinja" %}
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group flex-wrap">
+                <a href="{{ url_for('schedule.create') }}" class="btn btn-secondary btn-sm btn-success mx-1">
+                    {{ _('create') }}
+                </a>
+
+                <div x-data>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="file" name="schedules" class="d-none" @upload.window="$el.click()"
+                            @change="$event.target.form.submit()">
+                        <button type="button" class="btn btn-secondary btn-sm btn-info mx-1"
+                            @click="$dispatch('upload')">
+                            {{ _('import') }}
+                        </button>
+                    </form>
+                </div>
+                <a href="{{ url_for('schedule.index') }}?action=export" class="btn btn-secondary btn-sm mx-1">
+                    {{ _('export') }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row py-1 px-2">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table table-striped" hx-get="" hx-trigger="load delay:1ms, every 1m" hx-target="tbody"
+                    hx-on::before-request="showLoading(150)" hx-on::after-settle="handleAfterSettle(event)"
+                    style="min-width: 300px;">
+                    <thead>
+                        <tr>
+                            <th>{{ _('layout') }}</th>
+                            <th>{{ _('eta_format') }}</th>
+                            <th class="collapse-md">{{ _('bookmark_group') }}</th>
+                            <th class="collapse-sm">{{ _('schedule') }}</th>
+                            <th class="collapse-sm">{{ _('next_execution') }}</th>
+                            <th class="collapse-sm">{{ _('is_partial') }}</th>
+                            <th class="collapse-md">{{ _('action') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row py-1 px-2">
+        <div class="col text-end">
+            <span id="last-update-time">
+                {# To be swapped by rows.jinja (by swap-oob) #}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/gh/superdumbtm/rpc-table@0.1.2/dist/rpc-table.min.js"></script>
+
+<script>
+    const rpc = new RpcTable('table');
+
+    function handleAfterSettle(event) {
+        if (!event.detail.requestConfig.path.includes("refresh")) {
+            rpc.process();
+        }
+        hideLoading();
+    }
+</script>
+{% endblock script %}
